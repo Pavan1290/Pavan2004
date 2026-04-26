@@ -343,6 +343,46 @@
   letter-spacing: 6px;
 }
 
+/* ---- Paint Stroke Underline ---- */
+.preloader-paint-stroke {
+  position: absolute;
+  z-index: 4;
+  width: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #00ffcc, #0077ff, #8a2be2, transparent);
+  margin-top: 100px; /* Positioned below the large name */
+  border-radius: 50px;
+  filter: blur(2px);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.stroke-visible {
+  opacity: 1;
+  animation: paintStrokeReveal 2s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.5s;
+}
+
+@keyframes paintStrokeReveal {
+  0% {
+    width: 0;
+    left: 20%;
+    filter: blur(10px);
+    box-shadow: 0 0 0 rgba(0, 255, 204, 0);
+  }
+  30% {
+    width: 60%;
+    left: 20%;
+    filter: blur(4px);
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+  }
+  100% {
+    width: 80%;
+    left: 10%;
+    filter: blur(2px);
+    box-shadow: 0 0 40px rgba(0, 255, 204, 0.1), 0 0 80px rgba(138, 43, 226, 0.05);
+  }
+}
+
 /* ---- Loading bar ---- */
 .preloader-bar-container {
   position: absolute;

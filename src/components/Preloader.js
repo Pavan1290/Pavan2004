@@ -386,6 +386,9 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
         ))}
       </div>
 
+      {/* Paint Stroke Underline */}
+      <div className={`preloader-paint-stroke ${textReveal ? 'stroke-visible' : ''}`}></div>
+
       {/* Loading bar */}
       {started && (
         <div className={`preloader-bar-container ${textReveal ? 'bar-hidden' : ''}`}>
