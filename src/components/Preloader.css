@@ -342,6 +342,68 @@
   text-transform: uppercase;
 }
 
+/* ---- Coder Animation (Bottom) ---- */
+.preloader-coder {
+  position: absolute;
+  bottom: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.coder-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.coder-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00ffcc;
+  filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.5));
+  animation: coderPulse 2s ease-in-out infinite;
+}
+
+.coder-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.coder-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: rgba(0, 255, 204, 0.6);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  background: #00ffcc;
+  border-radius: 50%;
+  animation: statusFlicker 1s steps(2) infinite;
+}
+
+@keyframes coderPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 20px rgba(0, 255, 204, 0.8)); }
+}
+
+@keyframes statusFlicker {
+  0% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
 /* ---- Vignette ---- */
 .preloader::after {
   content: '';

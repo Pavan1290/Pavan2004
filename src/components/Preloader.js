@@ -392,6 +392,20 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
         <div className="tape-roller"></div>
       </div>
 
+      {/* Coder Animation */}
+      <div className={`preloader-coder ${textReveal ? 'coder-visible' : ''}`}>
+        <div className="coder-icon-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="coder-icon">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </div>
+        <div className="coder-status">
+          <span className="status-dot"></span>
+          <span className="status-text">&gt; AGENT_READY...</span>
+        </div>
+      </div>
+
       {/* Loading bar */}
       {started && (
         <div className={`preloader-bar-container ${textReveal ? 'bar-hidden' : ''}`}>
