@@ -386,10 +386,10 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
         ))}
       </div>
 
-      {/* Fluid Paint Underline */}
-      <div className={`preloader-fluid-paint ${textReveal ? 'paint-visible' : ''}`}>
-        <div className="paint-core"></div>
-        <div className="paint-diffusion"></div>
+      {/* Rolled Tape Underline */}
+      <div className={`preloader-rolled-tape ${textReveal ? 'tape-visible' : ''}`}>
+        <div className="tape-line"></div>
+        <div className="tape-roller"></div>
       </div>
 
       {/* Loading bar */}
