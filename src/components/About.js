@@ -58,7 +58,6 @@ function About() {
                 <FaGraduationCap className="icon" />
                 <div>
                   <h4>B.Tech in Computer Science Engineering (AI & ML)</h4>
-                  <p>8.15 CGPA</p>
                 </div>
               </div>
               <p className="education-subtitle">Sahyadri College of Engineering and Management, Mangalore (2022–2026)</p>
@@ -68,7 +67,6 @@ function About() {
                 <FaGraduationCap className="icon" />
                 <div>
                   <h4>Pre-University Course (PCMB)</h4>
-                  <p>69%</p>
                 </div>
               </div>
               <p className="education-subtitle">Nisarga PU College, Kollegal (2020–2022)</p>
@@ -78,7 +76,6 @@ function About() {
                 <FaGraduationCap className="icon" />
                 <div>
                   <h4>SSLC</h4>
-                  <p>86%</p>
                 </div>
               </div>
               <p className="education-subtitle">Nisarga School, Kollegal (2020)</p>
