@@ -11,7 +11,9 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
   const [textReveal, setTextReveal] = useState(false);
   const [countText, setCountText] = useState('');
   const [started, setStarted] = useState(false);
+  const [scrambledName, setScrambledName] = useState('PAVAN S'.split('').map(() => ''));
   const soundPlayedRef = useRef({ drone: false, orbit: false, implode: false, explode: false });
+  const nameLetters = 'PAVAN S'.split('');
 
   useEffect(() => {
     if (!started) return;
@@ -322,11 +324,11 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
 
       drawOrbitals(now, cx, cy, dt);
 
-      // End condition
-      if (elapsed > GATHER_DURATION + ORBIT_DURATION + IMPLODE_DURATION + EXPLODE_DURATION + 1200) {
+      // End condition: Keep name on screen for a few more seconds
+      if (elapsed > GATHER_DURATION + ORBIT_DURATION + IMPLODE_DURATION + EXPLODE_DURATION + 3500) {
         cancelAnimationFrame(rafRef.current);
         setHidden(true);
-        setTimeout(() => { if (onFinish) onFinish(); }, 800);
+        setTimeout(() => { if (onFinish) onFinish(); }, 1200);
         return;
       }
 
@@ -341,8 +343,41 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
       window.removeEventListener('resize', handleResize);
     };
   }, [onFinish, minDuration, maxDuration, started]);
+  
+  useEffect(() => {
+    if (textReveal) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+      nameLetters.forEach((finalChar, i) => {
+        if (finalChar === ' ') {
+          setScrambledName(prev => {
+            const next = [...prev];
+            next[i] = '\u00A0';
+            return next;
+          });
+          return;
+        }
+        let iterations = 0;
+        const maxIterations = 15 + i * 2;
+        const interval = setInterval(() => {
+          setScrambledName(prev => {
+            const next = [...prev];
+            next[i] = chars[Math.floor(Math.random() * chars.length)];
+            return next;
+          });
+          iterations++;
+          if (iterations >= maxIterations) {
+            clearInterval(interval);
+            setScrambledName(prev => {
+              const next = [...prev];
+              next[i] = finalChar;
+              return next;
+            });
+          }
+        }, 50 + Math.random() * 50);
+      });
+    }
+  }, [textReveal]);
 
-  const nameLetters = 'PAVAN S'.split('');
 
   const handleStart = useCallback(() => { setStarted(true); }, []);
 
@@ -371,23 +406,20 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
 
       {/* Name reveal */}
       <div className={`preloader-name ${textReveal ? 'name-visible' : ''}`}>
-        {nameLetters.map((letter, i) => (
+        <div className="cyber-grid"></div>
+        <div className="cyber-scanner"></div>
+        {scrambledName.map((letter, i) => (
           <span
             key={i}
             className="name-letter"
+            data-text={letter}
             style={{
-              animationDelay: `${i * 0.15}s, ${1.2 + i * 0.08}s, ${2.2 + i * 0.1}s`,
+              animationDelay: `${i * 0.05}s`,
             }}
           >
-            {letter === ' ' ? '\u00A0' : letter}
+            {letter}
           </span>
         ))}
-      </div>
-
-      {/* Rolled Tape Underline */}
-      <div className={`preloader-rolled-tape ${textReveal ? 'tape-visible' : ''}`}>
-        <div className="tape-line"></div>
-        <div className="tape-roller"></div>
       </div>
 
       {/* Coder Animation */}
