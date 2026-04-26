@@ -362,7 +362,7 @@
 .paint-core {
   position: absolute;
   height: 100%;
-  width: 0;
+  width: 100%;
   background: linear-gradient(90deg, #00ffcc, #0077ff, #8a2be2, transparent);
   border-radius: 50px;
   filter: blur(4px);
@@ -381,22 +381,17 @@
 
 @keyframes paintFlow {
   0% { 
-    width: 0; 
-    left: -10%; 
+    transform: scaleX(0);
+    transform-origin: left;
     opacity: 0; 
   }
-  15% { 
-    width: 30%; 
+  20% { 
     opacity: 1; 
   }
-  85% {
-    width: 30%;
-    opacity: 1;
-  }
   100% { 
-    width: 0; 
-    left: 110%; 
-    opacity: 0; 
+    transform: scaleX(1);
+    transform-origin: left;
+    opacity: 0.8; 
   }
 }
 
