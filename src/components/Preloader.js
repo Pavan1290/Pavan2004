@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { playDrone, playOrbitPulse, playImplosion, playExplosion, playChime, resumeAudio } from './SoundEngine';
 import './Preloader.css';
 
+const NAME_LETTERS = 'PAVAN S'.split('');
+const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+
 function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
   const canvasRef = useRef(null);
   const rafRef = useRef(null);
@@ -11,9 +14,8 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
   const [textReveal, setTextReveal] = useState(false);
   const [countText, setCountText] = useState('');
   const [started, setStarted] = useState(false);
-  const [scrambledName, setScrambledName] = useState('PAVAN S'.split('').map(() => ''));
+  const [scrambledName, setScrambledName] = useState(NAME_LETTERS.map(() => ''));
   const soundPlayedRef = useRef({ drone: false, orbit: false, implode: false, explode: false });
-  const nameLetters = 'PAVAN S'.split('');
 
   useEffect(() => {
     if (!started) return;
@@ -148,7 +150,6 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
     let progress = 0;
 
     function drawBackground(now) {
-      // Ultra-black with subtle gradient
       const g = ctx.createRadialGradient(cssW / 2, cssH / 2, 0, cssW / 2, cssH / 2, Math.max(cssW, cssH) * 0.8);
       g.addColorStop(0, '#080818');
       g.addColorStop(0.4, '#030310');
@@ -156,7 +157,6 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, cssW, cssH);
 
-      // Pulsing nebula glow
       const pulse = 0.5 + 0.5 * Math.sin(now * 0.001);
       const nebula = ctx.createRadialGradient(cssW / 2, cssH / 2, 0, cssW / 2, cssH / 2, 300 + pulse * 100);
       nebula.addColorStop(0, `rgba(138, 43, 226, ${0.03 + pulse * 0.02})`);
@@ -167,7 +167,7 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
       ctx.fillRect(0, 0, cssW, cssH);
     }
 
-    function drawDust(now) {
+    function drawDust() {
       for (const d of dustField) {
         d.x += d.speedX;
         d.y += d.speedY;
@@ -185,8 +185,6 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
       }
     }
 
-
-
     function applyGravity(p, cx, cy, strength) {
       const dx = cx - p.x;
       const dy = cy - p.y;
@@ -201,11 +199,8 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
       ctx.globalCompositeOperation = 'lighter';
 
       for (const p of orbitals) {
-        // Phase-specific physics
         if (phase === 0) {
-          // Gather: gentle gravity pull
           applyGravity(p, cx, cy, G * 0.8);
-          // Add tangential velocity for spiral effect
           const dx = cx - p.x;
           const dy = cy - p.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
@@ -216,7 +211,6 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
           p.vx *= 0.98;
           p.vy *= 0.98;
         } else if (phase === 1) {
-          // Orbit: stable circular orbits
           p.orbitAngle += p.orbitSpeed * 0.02;
           const targetX = cx + Math.cos(p.orbitAngle) * p.orbitRadius;
           const targetY = cy + Math.sin(p.orbitAngle) * p.orbitRadius;
@@ -225,12 +219,10 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
           p.vx *= 0.92;
           p.vy *= 0.92;
         } else if (phase === 2) {
-          // Implode: strong gravity pull to center
           applyGravity(p, cx, cy, G * 8);
           p.vx *= 0.95;
           p.vy *= 0.95;
         } else if (phase === 3) {
-          // Explode: burst outward
           const dx = p.x - cx;
           const dy = p.y - cy;
           const dist = Math.sqrt(dx * dx + dy * dy) + 1;
@@ -242,13 +234,11 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
         p.x += p.vx * dt;
         p.y += p.vy * dt;
 
-        // Trail
         p.trail.push({ x: p.x, y: p.y });
         if (p.trail.length > p.maxTrail) p.trail.shift();
 
         if (p.life <= 0) continue;
 
-        // Draw trail
         if (p.trail.length > 1) {
           for (let t = 1; t < p.trail.length; t++) {
             const alpha = (t / p.trail.length) * 0.3 * p.life;
@@ -260,7 +250,6 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
           }
         }
 
-        // Draw particle glow
         const glowSize = p.size * 5;
         const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowSize);
         grd.addColorStop(0, `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, ${0.6 * p.life})`);
@@ -271,24 +260,19 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
         ctx.arc(p.x, p.y, glowSize, 0, Math.PI * 2);
         ctx.fill();
 
-        // Draw core
         ctx.fillStyle = `rgba(255, 255, 255, ${0.9 * p.life})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size * 0.7, 0, Math.PI * 2);
         ctx.fill();
       }
-
       ctx.restore();
     }
-
 
     function render(now) {
       const dt = Math.min(40, now - lastTime) / 16.666;
       lastTime = now;
       const elapsed = now - startedAtRef.current;
 
-      // Phase transitions
-      // Play drone at start
       if (!soundPlayedRef.current.drone) { soundPlayedRef.current.drone = true; playDrone(); }
 
       if (phase === 0 && elapsed > GATHER_DURATION) {
@@ -305,13 +289,11 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
         if (!soundPlayedRef.current.explode) {
           soundPlayedRef.current.explode = true;
           playExplosion();
-          // Chimes for each letter
-          'PAVAN S'.split('').forEach((_, i) => setTimeout(() => playChime(i), i * 100 + 200));
+          NAME_LETTERS.forEach((_, i) => setTimeout(() => playChime(i), i * 100 + 200));
         }
         setTextReveal(true);
       }
 
-      // Progress counter
       const totalDuration = GATHER_DURATION + ORBIT_DURATION + IMPLODE_DURATION + EXPLODE_DURATION;
       progress = Math.min(100, Math.floor((elapsed / totalDuration) * 100));
       setCountText(`${progress}%`);
@@ -320,12 +302,10 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
       const cy = CENTER_Y();
 
       drawBackground(now);
-      drawDust(now);
-
+      drawDust();
       drawOrbitals(now, cx, cy, dt);
 
-      // End condition: Keep name on screen for a few more seconds
-      if (elapsed > GATHER_DURATION + ORBIT_DURATION + IMPLODE_DURATION + EXPLODE_DURATION + 3500) {
+      if (elapsed > totalDuration + 3500) {
         cancelAnimationFrame(rafRef.current);
         setHidden(true);
         setTimeout(() => { if (onFinish) onFinish(); }, 1200);
@@ -343,11 +323,10 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
       window.removeEventListener('resize', handleResize);
     };
   }, [onFinish, minDuration, maxDuration, started]);
-  
+
   useEffect(() => {
     if (textReveal) {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
-      nameLetters.forEach((finalChar, i) => {
+      NAME_LETTERS.forEach((finalChar, i) => {
         if (finalChar === ' ') {
           setScrambledName(prev => {
             const next = [...prev];
@@ -361,7 +340,7 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
         const interval = setInterval(() => {
           setScrambledName(prev => {
             const next = [...prev];
-            next[i] = chars[Math.floor(Math.random() * chars.length)];
+            next[i] = CHARS[Math.floor(Math.random() * CHARS.length)];
             return next;
           });
           iterations++;
@@ -377,7 +356,6 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
       });
     }
   }, [textReveal]);
-
 
   const handleStart = useCallback(() => { setStarted(true); }, []);
 
@@ -397,14 +375,12 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
 
       <canvas ref={canvasRef} className="preloader-canvas-element" />
       
-      {/* Loading percentage */}
       {started && (
         <div className={`preloader-counter ${textReveal ? 'counter-hidden' : ''}`}>
           {countText}
         </div>
       )}
 
-      {/* Name reveal */}
       <div className={`preloader-name ${textReveal ? 'name-visible' : ''}`}>
         <div className="cyber-grid"></div>
         <div className="cyber-scanner"></div>
@@ -413,16 +389,13 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
             key={i}
             className="name-letter"
             data-text={letter}
-            style={{
-              animationDelay: `${i * 0.05}s`,
-            }}
+            style={{ animationDelay: `${i * 0.05}s` }}
           >
             {letter}
           </span>
         ))}
       </div>
 
-      {/* Coder Animation */}
       <div className={`preloader-coder ${textReveal ? 'coder-visible' : ''}`}>
         <div className="coder-icon-wrapper">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="coder-icon">
@@ -436,7 +409,6 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
         </div>
       </div>
 
-      {/* Loading bar */}
       {started && (
         <div className={`preloader-bar-container ${textReveal ? 'bar-hidden' : ''}`}>
           <div className="preloader-bar-track">
