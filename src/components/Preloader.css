@@ -343,69 +343,57 @@
   letter-spacing: 6px;
 }
 
-/* ---- Holographic Laser Scan ---- */
-.preloader-laser-scan {
+/* ---- Fluid Paint in Water Underline ---- */
+.preloader-fluid-paint {
   position: absolute;
   z-index: 4;
-  width: 100%;
-  height: 2px;
-  margin-top: 180px; /* Increased space below the name */
-  left: 0;
+  width: 80%;
+  height: 12px; /* Thicker line */
+  margin-top: 280px; /* ~3cm space below the name */
+  left: 10%;
   opacity: 0;
   pointer-events: none;
 }
 
-.laser-visible {
+.paint-visible {
   opacity: 1;
 }
 
-.laser-line {
+.paint-core {
   position: absolute;
   height: 100%;
-  width: 150px;
-  background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.8), #fff, rgba(0, 255, 204, 0.8), transparent);
-  box-shadow: 0 0 20px rgba(0, 255, 204, 0.6), 0 0 40px rgba(0, 255, 204, 0.2);
-  filter: blur(1px);
-  animation: laserMove 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.3s;
-}
-
-.laser-trail {
-  position: absolute;
-  height: 1px;
   width: 0;
-  background: linear-gradient(90deg, rgba(0, 255, 204, 0.3), rgba(138, 43, 226, 0.1), transparent);
-  animation: laserTrailGrow 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.3s;
+  background: linear-gradient(90deg, #00ffcc, #0077ff, #8a2be2, transparent);
+  border-radius: 50px;
+  filter: blur(4px);
+  box-shadow: 0 0 30px rgba(0, 255, 204, 0.4), 0 0 60px rgba(138, 43, 226, 0.2);
+  animation: paintFlow 3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.4s,
+             paintWave 4s ease-in-out infinite alternate;
 }
 
-@keyframes laserMove {
-  0% { left: -20%; opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { left: 120%; opacity: 0; }
-}
-
-@keyframes laserTrailGrow {
-  0% { width: 0; left: 0; }
-  100% { width: 100%; left: 0; }
-}
-
-/* Digital flicker for the laser */
-.laser-visible .laser-line::after {
-  content: '';
+.paint-diffusion {
   position: absolute;
-  top: -50px;
-  bottom: -50px;
-  left: 50%;
-  width: 1px;
-  background: rgba(0, 255, 204, 0.2);
-  box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
-  animation: scanlineFlicker 0.1s infinite;
+  inset: -10px;
+  background: radial-gradient(circle, rgba(0, 255, 204, 0.1) 0%, transparent 80%);
+  opacity: 0;
+  animation: paintDiffuse 3s ease-out forwards 1s;
 }
 
-@keyframes scanlineFlicker {
-  0% { opacity: 0.3; }
-  50% { opacity: 0.8; }
-  100% { opacity: 0.3; }
+@keyframes paintFlow {
+  0% { width: 0; left: 0; opacity: 0; }
+  20% { opacity: 1; }
+  100% { width: 100%; left: 0; opacity: 0.8; }
+}
+
+@keyframes paintWave {
+  0% { transform: scaleY(1) translateY(0); filter: blur(4px); }
+  50% { transform: scaleY(1.3) translateY(2px); filter: blur(6px); }
+  100% { transform: scaleY(0.9) translateY(-1px); filter: blur(5px); }
+}
+
+@keyframes paintDiffuse {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 0.4; transform: scale(1.2); }
 }
 
 /* ---- Loading bar ---- */
