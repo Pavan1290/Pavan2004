@@ -373,10 +373,10 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
 
       drawBackground(now);
       drawDust(now);
-      drawGravityField(now, cx, cy);
+      // drawGravityField(now, cx, cy); // Removed as per user request
 
       drawOrbitals(now, cx, cy, dt);
-      drawShockwave(cx, cy);
+      // drawShockwave(cx, cy); // Removed as per user request
 
       // End condition
       if (elapsed > GATHER_DURATION + ORBIT_DURATION + IMPLODE_DURATION + EXPLODE_DURATION + 1200) {
