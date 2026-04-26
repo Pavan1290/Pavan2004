@@ -1,0 +1,147 @@
+.experience {
+  background: linear-gradient(135deg, rgba(10, 14, 39, 0.5) 0%, rgba(26, 31, 58, 0.5) 100%);
+}
+
+.experience-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.experience-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 50px;
+  position: relative;
+}
+
+.experience-timeline::before {
+  content: '';
+  position: absolute;
+  left: 40px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, #0066ff 0%, #00d4ff 50%, transparent 100%);
+}
+
+.experience-item {
+  padding: 30px;
+  border-radius: 12px;
+  margin-left: 120px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.experience-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(0, 212, 255, 0.3);
+}
+
+.experience-marker {
+  position: absolute;
+  left: -60px;
+  top: 35px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #0066ff 0%, #00d4ff 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  box-shadow: 0 0 20px rgba(0, 102, 255, 0.6);
+}
+
+.experience-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.experience-header {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.experience-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #e0e0e0;
+}
+
+.experience-company {
+  font-size: 16px;
+  color: #0066ff;
+  font-weight: 600;
+}
+
+.experience-meta {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #a0a0a0;
+}
+
+.meta-item svg {
+  color: #0066ff;
+}
+
+.experience-description {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #c0c0c0;
+}
+
+.experience-tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.tag {
+  padding: 6px 12px;
+  background: rgba(0, 102, 255, 0.2);
+  border: 1px solid rgba(0, 102, 255, 0.4);
+  border-radius: 20px;
+  font-size: 12px;
+  color: #0066ff;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.tag:hover {
+  background: rgba(0, 102, 255, 0.4);
+  border-color: #0066ff;
+}
+
+@media (max-width: 768px) {
+  .experience-timeline::before {
+    left: 20px;
+  }
+
+  .experience-item {
+    margin-left: 80px;
+  }
+
+  .experience-marker {
+    left: -35px;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .experience-title {
+    font-size: 18px;
+  }
+}

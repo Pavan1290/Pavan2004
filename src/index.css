@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #02020a;
+  color: #c8d8e8;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #020208; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00ffcc 0%, #0077ff 50%, #8a2be2 100%);
+  border-radius: 6px;
+}
+
+/* ── Global section wrapper ── */
+.section {
+  padding: 100px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .section { padding: 70px 20px; }
+}
+
+/* ── Gradient heading text ── */
+.gradient-text {
+  background: linear-gradient(110deg,
+    #ffffff 0%,
+    #c8f0ff 25%,
+    #7fcfff 55%,
+    #9b6fff 80%,
+    #00ffcc 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShimmer 6s ease infinite;
+}
+
+@keyframes gradientShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── Section title ── */
+.section-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(36px, 5vw, 52px);
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff 0%, #a8d8ff 40%, #b28dff 75%, #00ffcc 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShimmer 6s ease infinite;
+  margin-bottom: 12px;
+}
+
+/* Gradient line under section title */
+.section-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 3px;
+  margin: 16px auto 0;
+  background: linear-gradient(90deg, #00ffcc, #0077ff, #8a2be2);
+  border-radius: 3px;
+  animation: lineExpand 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: center;
+}
+
+@keyframes lineExpand {
+  from { width: 0; opacity: 0; }
+  to { width: 80px; opacity: 1; }
+}
+
+.section-subtitle {
+  font-size: 16px;
+  color: rgba(180, 200, 220, 0.55);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+  letter-spacing: 0.3px;
+}
+
+/* ── Glass card ── */
+.glass-effect {
+  background: rgba(10, 12, 30, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+}
+
+/* Gradient border on glass cards */
+.glass-border {
+  position: relative;
+  border-radius: 16px;
+}
+
+.glass-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(0,255,204,0.2), rgba(0,119,255,0.15), rgba(138,43,226,0.2));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  padding: 13px 34px;
+  background: linear-gradient(135deg, #0066ff 0%, #00d4ff 100%);
+  background-size: 200% 200%;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: gradientShimmer 4s ease infinite;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(0, 102, 255, 0.35),
+              0 0 20px rgba(0, 212, 255, 0.2);
+}
+
+.btn-secondary {
+  padding: 13px 34px;
+  background: transparent;
+  border: 1px solid rgba(0, 119, 255, 0.4);
+  border-radius: 10px;
+  color: rgba(0, 200, 255, 0.85);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,119,255,0.08), rgba(138,43,226,0.08));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-secondary:hover::before { opacity: 1; }
+.btn-secondary:hover {
+  border-color: rgba(0,200,255,0.6);
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(0, 119, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* ── Divider lines — gradient ── */
+.gradient-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0,200,255,0.3) 30%, rgba(138,43,226,0.3) 70%, transparent 100%);
+  margin: 0;
+  border: none;
+}
+
+/* ── Scroll reveal utility ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Animations ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-16px); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 200, 255, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(138, 43, 226, 0.5); }
+}
+
+.float { animation: float 4s ease-in-out infinite; }
+.glow  { animation: glow 2.5s ease-in-out infinite; }
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 20px; }
+}

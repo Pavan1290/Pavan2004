@@ -1,0 +1,82 @@
+.custom-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid rgba(0, 255, 204, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.custom-cursor-ring.hovering {
+  width: 80px;
+  height: 80px;
+  border-color: rgba(0, 255, 204, 0.8);
+  background: rgba(0, 255, 204, 0.05);
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+}
+
+.custom-cursor-ring.clicking {
+  transform: scale(0.8) translate(-50%, -50%);
+  background: rgba(0, 255, 204, 0.15);
+}
+
+.custom-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: #00ffcc;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  box-shadow: 0 0 10px #00ffcc;
+}
+
+.cursor-dot-center {
+  width: 2px;
+  height: 2px;
+  background: rgba(0, 255, 204, 0.5);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hovering .cursor-dot-center {
+  opacity: 1;
+}
+
+.cursor-label {
+  position: absolute;
+  top: -25px;
+  font-size: 10px;
+  font-weight: 800;
+  color: #00ffcc;
+  letter-spacing: 2px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.hovering .cursor-label {
+  opacity: 1;
+}
+
+/* Hide default cursor on desktop */
+@media (min-width: 1024px) {
+  * {
+    cursor: none !important;
+  }
+}
+@media (max-width: 1023px) {
+  .custom-cursor-ring, .custom-cursor-dot {
+    display: none;
+  }
+}
