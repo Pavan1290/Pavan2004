@@ -188,9 +188,10 @@
   transform: translateY(20px);
 }
 
-/* ---- Name reveal ---- */
+/* ---- Name reveal (Top Positioned) ---- */
 .preloader-name {
   position: absolute;
+  top: 15vh; /* Position name at the top */
   z-index: 5;
   display: flex;
   gap: 0;
@@ -200,7 +201,7 @@
 .name-letter {
   display: inline-block;
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: clamp(50px, 12vw, 130px);
+  font-size: clamp(40px, 10vw, 110px); /* Slightly smaller for top positioning */
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -218,7 +219,7 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   opacity: 0;
-  transform: translateY(30px) scale(0.85);
+  transform: translateY(30px);
   filter: blur(12px);
   animation: none;
   position: relative;
@@ -228,128 +229,26 @@
 .name-visible .name-letter {
   animation:
     letterMaterialize 1s cubic-bezier(0.22, 1, 0.36, 1) forwards,
-    letterColorShift 3s ease 1.2s forwards,
-    letterBreathe 4s ease-in-out 2.2s infinite;
+    letterColorShift 3s ease 1.2s forwards;
 }
 
-/* Phase 1: Letter materializes — blur to sharp, fade up */
 @keyframes letterMaterialize {
-  0% {
-    opacity: 0;
-    transform: translateY(30px) scale(0.85);
-    filter: blur(12px);
-  }
-  40% {
-    opacity: 0.7;
-    transform: translateY(-4px) scale(1.03);
-    filter: blur(2px);
-  }
-  70% {
-    opacity: 1;
-    transform: translateY(2px) scale(0.99);
-    filter: blur(0);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0)
-      drop-shadow(0 0 20px rgba(0, 180, 255, 0.25))
-      drop-shadow(0 0 40px rgba(100, 60, 220, 0.15));
-  }
+  0% { opacity: 0; transform: translateY(30px); filter: blur(12px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
 
-/* Phase 2: Gradient shifts from white to the colored palette */
 @keyframes letterColorShift {
-  0% {
-    background-position: 0% 100%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
+  0% { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
 }
 
-/* Phase 3: Gentle ambient breathing glow */
-@keyframes letterBreathe {
-  0%, 100% {
-    filter: blur(0)
-      drop-shadow(0 0 12px rgba(0, 180, 255, 0.2))
-      drop-shadow(0 0 30px rgba(100, 60, 220, 0.1));
-    transform: translateY(0);
-  }
-  50% {
-    filter: blur(0)
-      drop-shadow(0 0 25px rgba(0, 255, 180, 0.35))
-      drop-shadow(0 0 50px rgba(0, 120, 255, 0.2))
-      drop-shadow(0 0 80px rgba(138, 43, 226, 0.1));
-    transform: translateY(-4px);
-  }
-}
-
-/* Horizontal light-wipe across each letter */
-.name-letter::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.15),
-    rgba(0, 200, 255, 0.1),
-    transparent
-  );
-  opacity: 0;
-  pointer-events: none;
-}
-
-.name-visible .name-letter::before {
-  animation: lightWipe 0.8s ease 0.2s forwards;
-}
-
-@keyframes lightWipe {
-  0% {
-    left: -100%;
-    opacity: 0;
-  }
-  30% {
-    opacity: 1;
-  }
-  100% {
-    left: 150%;
-    opacity: 0;
-  }
-}
-
-/* ---- Subtitle ---- */
-.preloader-subtitle {
-  position: absolute;
-  z-index: 5;
-  margin-top: 140px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: clamp(12px, 2vw, 18px);
-  font-weight: 300;
-  letter-spacing: 4px;
-  color: rgba(255, 255, 255, 0);
-  transition: color 1s ease, transform 1s ease, letter-spacing 1s ease;
-  transform: translateY(10px);
-  text-transform: uppercase;
-}
-
-.subtitle-visible {
-  color: rgba(255, 255, 255, 0.6);
-  transform: translateY(0);
-  letter-spacing: 6px;
-}
-
-/* ---- Rolled Tape Unrolling Underline ---- */
+/* ---- Rolled Tape Unrolling Underline (3cm below name) ---- */
 .preloader-rolled-tape {
   position: absolute;
   z-index: 4;
   width: 80%;
   height: 8px;
-  margin-top: 280px; /* 3cm space */
+  top: calc(15vh + 130px); /* Positioned exactly below the name */
   left: 10%;
   opacity: 0;
   pointer-events: none;
@@ -398,11 +297,11 @@
   }
 }
 
-/* ---- Loading bar ---- */
+/* ---- Loading bar (Moved down) ---- */
 .preloader-bar-container {
   position: absolute;
   z-index: 5;
-  bottom: 60px;
+  bottom: 80px;
   width: min(300px, 60vw);
   display: flex;
   flex-direction: column;
