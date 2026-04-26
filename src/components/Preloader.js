@@ -54,7 +54,6 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
     let orbitals = [];    // Main orbital particles
     let ringParticles = []; // Inner ring particles
     let dustField = [];   // Background dust/nebula
-    let shockwave = { radius: 0, opacity: 0, active: false };
 
     // Color palettes
     const colors = [
@@ -301,7 +300,6 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
       } else if (phase === 2 && elapsed > GATHER_DURATION + ORBIT_DURATION + IMPLODE_DURATION) {
         phase = 3;
         phaseRef.current = 3;
-        shockwave = { radius: 0, opacity: 0.8, active: true };
         if (!soundPlayedRef.current.explode) {
           soundPlayedRef.current.explode = true;
           playExplosion();
