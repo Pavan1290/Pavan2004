@@ -386,8 +386,11 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
         ))}
       </div>
 
-      {/* Paint Stroke Underline */}
-      <div className={`preloader-paint-stroke ${textReveal ? 'stroke-visible' : ''}`}></div>
+      {/* Holographic Laser Scan */}
+      <div className={`preloader-laser-scan ${textReveal ? 'laser-visible' : ''}`}>
+        <div className="laser-line"></div>
+        <div className="laser-trail"></div>
+      </div>
 
       {/* Loading bar */}
       {started && (
