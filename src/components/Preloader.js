@@ -280,58 +280,6 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
       ctx.restore();
     }
 
-    function drawShockwave(cx, cy) {
-      if (!shockwave.active) return;
-      shockwave.radius += 12;
-      shockwave.opacity -= 0.015;
-      if (shockwave.opacity <= 0) {
-        shockwave.active = false;
-        return;
-      }
-
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-      ctx.strokeStyle = `rgba(0, 255, 204, ${shockwave.opacity})`;
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.arc(cx, cy, shockwave.radius, 0, Math.PI * 2);
-      ctx.stroke();
-
-      ctx.strokeStyle = `rgba(138, 43, 226, ${shockwave.opacity * 0.6})`;
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.arc(cx, cy, shockwave.radius * 0.8, 0, Math.PI * 2);
-      ctx.stroke();
-
-      ctx.strokeStyle = `rgba(0, 119, 255, ${shockwave.opacity * 0.4})`;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.arc(cx, cy, shockwave.radius * 1.2, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    // Gravitational field lines (subtle)
-    function drawGravityField(now, cx, cy) {
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-      const lineCount = 6;
-      for (let i = 0; i < lineCount; i++) {
-        const baseAngle = (i / lineCount) * Math.PI * 2 + now * 0.0005;
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(0, 255, 204, 0.04)`;
-        ctx.lineWidth = 1;
-        for (let r = 30; r < 250; r += 2) {
-          const spiralAngle = baseAngle + r * 0.008;
-          const x = cx + Math.cos(spiralAngle) * r;
-          const y = cy + Math.sin(spiralAngle) * r;
-          if (r === 30) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-      }
-      ctx.restore();
-    }
 
     function render(now) {
       const dt = Math.min(40, now - lastTime) / 16.666;
@@ -373,10 +321,8 @@ function Preloader({ onFinish, minDuration = 4000, maxDuration = 7000 }) {
 
       drawBackground(now);
       drawDust(now);
-      // drawGravityField(now, cx, cy); // Removed as per user request
 
       drawOrbitals(now, cx, cy, dt);
-      // drawShockwave(cx, cy); // Removed as per user request
 
       // End condition
       if (elapsed > GATHER_DURATION + ORBIT_DURATION + IMPLODE_DURATION + EXPLODE_DURATION + 1200) {
